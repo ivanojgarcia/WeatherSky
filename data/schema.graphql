@@ -1,0 +1,28 @@
+""" Query """
+
+type Query {
+  getAllCountries(limit: Int): String
+}
+
+""" Mutations """
+type Mutation {
+    """ Create Couintry """
+    createCountry(input: CountryInput): String
+}
+
+type Country {
+    _id: ID
+    code: String
+    name: String
+    latitud: String
+    longitude: String
+    img: String
+}
+
+input CountryInput {
+    code: String
+    name: String
+    latitud: String
+    longitude: String
+    img: String
+}
