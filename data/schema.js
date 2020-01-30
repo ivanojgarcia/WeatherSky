@@ -5,12 +5,15 @@ const typeDefs = `
 
 type Query {
   getAllCountries(limit: Int): [Country]
+  getCountry(code: String): Country
+  getWheaterCountry(latitud: Float, longitude: Float, time: Int): Wheater
 }
 
 """ Mutations """
 type Mutation {
     """ Create Couintry """
     createCountry(input: CountryInput): Country
+    createErrorLog(input: ErrorsInput): Errors
 }
 
 type Country {
@@ -21,6 +24,15 @@ type Country {
     longitude: String
     img: String
     created_at: String
+}
+
+type Wheater {
+    latitud: Float
+    longitude: Float
+    temperature: Float
+    timezone: String
+    summary: String
+    time: Int
 }
 
 input CountryInput {
