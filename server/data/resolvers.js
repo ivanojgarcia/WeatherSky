@@ -8,9 +8,18 @@ const lang = '?lang=es'
 
 export const resolvers = {
     Query: {
-        getAllCountries: async (root, {limit}) => {
+        getAllCountries: async (root) => {
             try {
                 return await Countries.find({});
+                
+            } catch (error) {
+                console.log(error)
+                throw new Error(error)
+            }
+        },
+        getAllErrors: async (root) => {
+            try {
+                return await ErrorLogs.find({});
                 
             } catch (error) {
                 console.log(error)

@@ -4,7 +4,8 @@ const typeDefs = `
 """ Query """
 
 type Query {
-  getAllCountries(limit: Int): [Country]
+  getAllCountries: [Country]
+  getAllErrors: [Errors]
   getCountry(code: String): Country
   getWheaterCountry(latitud: Float, longitude: Float, time: Int): Wheater
 }
