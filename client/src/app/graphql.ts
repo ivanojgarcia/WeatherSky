@@ -15,10 +15,15 @@ export const GET_COUNTRY = gql `
     query getCountry($code : String){
         getCountry(code: $code){
             name
-            img
-            code
             latitud
             longitude
+            img
+            code
+            wheater{
+            temperature
+            summary
+            time
+            }
         }
     }
 `;

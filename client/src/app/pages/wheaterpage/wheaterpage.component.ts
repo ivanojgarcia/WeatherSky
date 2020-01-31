@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Apollo } from 'apollo-angular';
-import { Country, Query } from '../../type';
-import { Observable } from 'rxjs/Observable';
+import { DataCountries, DataCountry } from '../../type';
 import { map } from 'rxjs/operators';
-import gql from 'graphql-tag';
-import { ALL_COUNTRIES, GET_COUNTRY, GET_WHEATER, AllLinkQueryResponse } from '../../graphql';
+import { ALL_COUNTRIES, GET_COUNTRY } from '../../graphql';
 
 
 @Component({
@@ -20,6 +18,7 @@ export class WheaterpageComponent implements OnInit, OnDestroy {
   time : any;
   date : any;
   wheater : any = {};
+  loadData : boolean;
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
@@ -27,58 +26,34 @@ export class WheaterpageComponent implements OnInit, OnDestroy {
     body.classList.add("profile-page");
 
     this.showData = false;
+    this.loadData = false;
     this.loadButtons = true;
 
-    // this.allCountries = this.apollo.watchQuery<Query>({
-    //   query: gql`
-    //     query {
-    //       getAllCountries{
-    //           id
-    //           name
-    //           code
-    //           latitud
-    //           longitude
-    //           }
-    //       }
-    //   `
-    // }).valueChanges
-    // .pipe(
-    //   map(result => result.data.getAllCountries)
-    // );
-
     this.apollo.watchQuery({
-      query: ALL_COUNTRIES
-    }).valueChanges.subscribe((response) => {
-      // 5
-      this.countries = response.data;
-      this.loadButtons = false;
-     });
+       query: ALL_COUNTRIES
+     }).valueChanges
+     .pipe(map(result => <DataCountries>result.data))
+     .subscribe((countries) => {
+       this.countries = countries.getAllCountries;
+       this.loadButtons = false
+     })
 
   }
   getDataCountry(code) {
+    this.loadData = true;
+    this.showData = false
     this.apollo.watchQuery({
       query: GET_COUNTRY,
       variables: {
         code
       }
-    }).valueChanges.subscribe((response) => {
-      // 5
-      this.country = response.data;
-      let tmpDate = new Date();
-      let now = Math.floor(+new Date()/1000)
-      this.apollo.watchQuery({
-        query: GET_WHEATER,
-        variables: {
-          latitud: parseFloat(response.data.getCountry.latitud),
-          longitude: parseFloat(response.data.getCountry.longitude),
-          time: now,
-        }
-      }).valueChanges.subscribe((res) => {
-        this.wheater = res.data;
-        console.log(res.data)
-      })
+    }).valueChanges.pipe(map(result => <DataCountry> result.data)) .subscribe((country) => {
+      this.country = country.getCountry;
+      let now = new Date();
+      this.date = now.getDate() + '-' + ( now.getMonth() + 1 ) + '-' + now.getFullYear();
+      this.time = now.getHours() + ':' + now.getMinutes();
      });
-     this.showData = true;
+     setTimeout(() => { this.loadData = false; this.showData = true; }, 1500);
     }
   clearData() {
     this.showData = false;
