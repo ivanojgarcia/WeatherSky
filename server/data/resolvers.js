@@ -28,9 +28,39 @@ export const resolvers = {
         },
         getCountry: async (root, {code}) => {
             try {
-                return await Countries.findOne({
+                const countryData = await Countries.findOne({
                     code
                 })
+                if (Math.random(0, 1) < 0.1) {
+                    const errorLogsSave = await ErrorLogs.create({
+                        code: "500",
+                        description: `[${new Date()}][500] How unfortunate! The API Request Failed`,
+                        created_at: new Date()
+                    })
+                    throw new Error('How unfortunate! The API Request Failed') 
+                }
+                const apiWheater = await fetch(`${apiBase}${countryData.latitud},${countryData.longitude}?lang=es`)
+                .then(res => res.json())
+                let temperature =  (apiWheater.currently.temperature - 32) * 5 / 9; //Fahrenheit to Celsius
+                const countryFullData = {
+                    id: countryData._id,
+                    code: countryData.code,
+                    name: countryData.name,
+                    latitud: countryData.latitud,
+                    longitude: countryData.longitude,
+                    img: countryData.img,
+                    created_at: countryData.created_at,
+                    wheater: {
+                        latitud: apiWheater.latitude,
+                        longitude: apiWheater.longitude,
+                        temperature: parseInt(temperature) ,
+                        timezone: apiWheater.timezone,
+                        summary: apiWheater.currently.summary,
+                        time: apiWheater.currently.time
+                    }
+
+                }
+                return countryFullData;
             } catch (error) {
                 console.log(error)
                 throw new Error(error)
@@ -49,6 +79,7 @@ export const resolvers = {
                 const apiWheater = await fetch(`${apiBase}${latitud},${longitude},${time}?lang=es`)
                 .then(res => res.json())
                 return {
+
                     latitud: apiWheater.latitude,
                     longitude: apiWheater.longitude,
                     temperature: apiWheater.currently.temperature,

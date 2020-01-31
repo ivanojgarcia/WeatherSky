@@ -24,6 +24,7 @@ type Country {
     latitud: String
     longitude: String
     img: String
+    wheater: Wheater
     created_at: String
 }
 
