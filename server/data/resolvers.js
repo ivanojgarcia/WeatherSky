@@ -39,6 +39,7 @@ export const resolvers = {
                     })
                     throw new Error('How unfortunate! The API Request Failed') 
                 }
+
                 const apiWheater = await fetch(`${apiBase}${countryData.latitud},${countryData.longitude}?lang=es`)
                 .then(res => res.json())
                 let temperature =  (apiWheater.currently.temperature - 32) * 5 / 9; //Fahrenheit to Celsius
