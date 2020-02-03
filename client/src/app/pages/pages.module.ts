@@ -22,6 +22,7 @@ import { ProfilepageComponent } from "./examples/profilepage/profilepage.compone
 import { RegisterpageComponent } from "./examples/registerpage/registerpage.component";
 import { LandingpageComponent } from "./examples/landingpage/landingpage.component";
 import { WheaterpageComponent } from './wheaterpage/wheaterpage.component';
+import { LogspageComponent } from './logspage/logspage.component';
 
 @NgModule({
   imports: [
@@ -40,21 +41,24 @@ import { WheaterpageComponent } from './wheaterpage/wheaterpage.component';
     AlertModule.forRoot(),
     BsDatepickerModule.forRoot(),
     CarouselModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    
   ],
   declarations: [
     IndexComponent,
     ProfilepageComponent,
     RegisterpageComponent,
     LandingpageComponent,
-    WheaterpageComponent
+    WheaterpageComponent,
+    LogspageComponent
   ],
   exports: [
     IndexComponent,
     ProfilepageComponent,
     RegisterpageComponent,
     LandingpageComponent,
-    WheaterpageComponent
+    WheaterpageComponent,
+    LogspageComponent
   ],
   providers: []
 })

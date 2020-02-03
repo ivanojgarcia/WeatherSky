@@ -1,0 +1,9 @@
+<header class="container">
+    <h1 class="display-3 border-bottom">
+      Logs
+    </h1>
+    <span *ngIf="loadButtons" role="status">
+      <h4>Loading...</h4>
+    </span>
+    <p *ngFor = "let error of logs">{{error.description}}</p>
+  </header>

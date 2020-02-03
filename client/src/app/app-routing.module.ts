@@ -8,14 +8,15 @@ import { ProfilepageComponent } from "./pages/examples/profilepage/profilepage.c
 import { WheaterpageComponent } from "./pages/wheaterpage/wheaterpage.component";
 import { RegisterpageComponent } from "./pages/examples/registerpage/registerpage.component";
 import { LandingpageComponent } from "./pages/examples/landingpage/landingpage.component";
-
+import { LogspageComponent } from './pages/logspage/logspage.component';
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "home", component: IndexComponent },
   { path: "profile", component: ProfilepageComponent },
   { path: "wheater-status", component: WheaterpageComponent },
   { path: "register", component: RegisterpageComponent },
-  { path: "landing", component: LandingpageComponent }
+  { path: "landing", component: LandingpageComponent },
+  { path: "logs", component: LogspageComponent }
 ];
 
 @NgModule({

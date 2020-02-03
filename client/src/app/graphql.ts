@@ -10,6 +10,15 @@ export const ALL_COUNTRIES = gql`
         }
     }
 `;
+export const ALL_ERROR_LOGS = gql`
+  query getAllErrors{
+    getAllErrors{
+        code
+        description
+        id
+        }
+    }
+`;
 
 export const GET_COUNTRY = gql `
     query getCountry($code : String){

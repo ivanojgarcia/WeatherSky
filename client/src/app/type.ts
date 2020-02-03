@@ -11,11 +11,21 @@ export type Country = {
     created_at: string;
 }
 
+export type ErrorLogs = {
+    id: number;
+    code: string;
+    description: string;
+    created_at: string;
+}
+
 export type DataCountry = {
     getCountry: Country
 }
 export type DataCountries = {
     getAllCountries: Country[];
+}
+export type LogsError = {
+    getAllErrors: ErrorLogs[];
 }
 
 export type CountryResponse = {

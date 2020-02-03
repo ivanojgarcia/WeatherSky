@@ -26,7 +26,7 @@ import { LandingpageComponent } from "./pages/examples/landingpage/landingpage.c
 import { GraphQLModule } from './apollo.config';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
     // IndexComponent,
     // ProfilepageComponent,
     // RegisterpageComponent,

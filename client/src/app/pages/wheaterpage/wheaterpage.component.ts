@@ -19,6 +19,8 @@ export class WheaterpageComponent implements OnInit, OnDestroy {
   date : any;
   wheater : any = {};
   loadData : boolean;
+  error: boolean = false;
+  errorMessage: string;
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class WheaterpageComponent implements OnInit, OnDestroy {
     this.showData = false;
     this.loadData = false;
     this.loadButtons = true;
+    
 
     this.apollo.watchQuery({
        query: ALL_COUNTRIES
@@ -42,21 +45,35 @@ export class WheaterpageComponent implements OnInit, OnDestroy {
   getDataCountry(code) {
     this.loadData = true;
     this.showData = false
+    this.clearData();
     this.apollo.watchQuery({
       query: GET_COUNTRY,
       variables: {
         code
       }
     }).valueChanges.pipe(map(result => <DataCountry> result.data)) .subscribe((country) => {
+      this.errorMessage = '';
+      this.error = false;
       this.country = country.getCountry;
       let now = new Date();
+      let minutes = (now.getMinutes() < 10 ) ? '0'+now.getMinutes() : now.getMinutes();
+      let hours = (now.getHours() < 10 ) ? '0'+now.getHours() : now.getHours();
       this.date = now.getDate() + '-' + ( now.getMonth() + 1 ) + '-' + now.getFullYear();
-      this.time = now.getHours() + ':' + now.getMinutes();
-     });
-     setTimeout(() => { this.loadData = false; this.showData = true; }, 1500);
-    }
+      this.time = hours + ':' +  minutes;
+      setTimeout(() => { this.loadData = false; this.showData = true; }, 1500);
+     },
+     (error) => {
+       if(error){
+        this.errorMessage = error.graphQLErrors[0].message;
+        setTimeout(() => { this.loadData = false; this.error = true; }, 1500);
+       }
+      console.log(error.graphQLErrors[0].message); 
+    });
+  }
   clearData() {
     this.showData = false;
+    this.errorMessage = '';
+    this.error = false;
   }
   ngOnDestroy() {
     var body = document.getElementsByTagName("body")[0];

@@ -92,6 +92,9 @@
       <span role="status" *ngIf = "loadData">
         <h4>Cargando Información...</h4>
       </span>
+      <alert [type]="'danger'" *ngIf="error">
+        {{ errorMessage }}
+      </alert>
       <div class="row justify-content-between" *ngIf = "showData">
         <div class="col-md-6">
           <div class="row justify-content-between align-items-center">
