@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
-const baseUrl = "mongodb+srv://adminDB:UGkAvjF96kejF4PJ@darksky-cym5a.mongodb.net/test?retryWrites=true&w=majority";
+const baseUrl = "<url_mongoDB>";
 
 const connectDB = async () => {
     await mongoose.connect(baseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
